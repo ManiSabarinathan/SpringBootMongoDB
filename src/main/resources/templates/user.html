@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Juju</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	Src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	Src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/login">Juju.com</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">Settings</a></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+					 <form th:action="@{/logout}" method="post">
+           				 <input type="submit" value="Sign Out"/>
+        			</form>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main role="main" class="container">
+
+	<div class="starter-template">
+		<h2>
+			<span th:text="'Hello, ' + ${username}"></span>
+		</h2>
+	</div>
+
+	<!-- <div class="table-responsive">-->
+	<div>
+		<input class="form-control" id="searchText" type="text" placeholder="Search.."> <br>
+		<table class="table table-sm table-striped table-bordered table-hover ">
+			<thead class="thead-dark">
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Salary</th>
+				</tr>
+			</thead>
+			<tbody id="userTable">
+				<tr th:each="user : ${userList}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.name}"></td>
+					<td th:text="${user.salary}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	</main>
+
+	<script type="text/javascript"
+		th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+		
+		<script>
+			$(document).ready(function(){
+			  $("#searchText").on("keyup", function() {
+			    var value = $(this).val().toLowerCase();
+			    $("#userTable tr").filter(function() {
+			      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			    });
+			  });
+			});
+		</script>
+</body>
+</html>
